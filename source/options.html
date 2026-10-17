@@ -1,0 +1,13 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><title>Sent Sound preferences</title><link rel="stylesheet" href="options.css"></head>
+<body><main><h1>Sent Sound</h1>
+<label class="toggle"><input id="enabled" type="checkbox"> Play a sound after a message is successfully sent</label>
+<fieldset><legend>Use a custom WAV sound</legend>
+<p id="filename">No WAV selected</p>
+<div class="buttons"><button id="choose" type="button">Browse…</button><button id="preview" type="button" disabled>Play</button></div>
+<input id="file" type="file" accept=".wav,audio/wav,audio/x-wav" hidden>
+<p class="hint">Choose a WAV up to 3 MB. A copy is saved locally; choose it again to update it if the original file changes. Standard PCM WAV is recommended.</p>
+</fieldset><p id="status" role="status" aria-live="polite"></p>
+<p class="hint">Applies to Send / Send Now in all accounts. No sound for failed sends, drafts, or Send Later. Success means Thunderbird completed sending, not that the recipient received or read the message.</p>
+<p class="hint">Settings save automatically. Play previews the sound even when automatic playback is disabled.</p>
+</main><script src="core.js"></script><script src="options.js"></script></body></html>

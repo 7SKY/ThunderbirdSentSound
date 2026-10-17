@@ -1,0 +1,11 @@
+:root { color-scheme: light dark; font: menu; }
+body { margin: 0; padding: 28px; background: Canvas; color: CanvasText; }
+main { max-width: 650px; margin: auto; }
+h1 { font-size: 1.6rem; margin: 0 0 24px; }
+.toggle { display: flex; gap: 9px; align-items: center; line-height: 1.5; }
+fieldset { margin-top: 22px; border: 1px solid GrayText; border-radius: 6px; padding: 16px; }
+.buttons { display: flex; gap: 10px; }
+button { font: inherit; padding: 6px 18px; }
+.hint { line-height: 1.55; opacity: .8; }
+#filename { overflow-wrap: anywhere; }
+#status { min-height: 1.5em; line-height: 1.5; }

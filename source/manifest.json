@@ -1,0 +1,11 @@
+{
+  "manifest_version": 2,
+  "name": "Sent Sound",
+  "version": "1.0.0",
+  "description": "Play your chosen WAV after Thunderbird reports a successful immediate send.",
+  "browser_specific_settings": {"gecko": {"id": "sent-sound@local.thunderbird", "strict_min_version": "128.0"}},
+  "permissions": ["compose", "storage"],
+  "background": {"scripts": ["core.js", "background.js"], "persistent": true},
+  "options_ui": {"page": "options.html", "open_in_tab": true},
+  "content_security_policy": "script-src 'self'; object-src 'self'; media-src 'self' data: blob:"
+}
