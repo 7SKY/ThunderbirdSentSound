@@ -3,13 +3,13 @@ const audio = new Audio();
 audio.preload = 'auto';
 let playback = Promise.resolve();
 audio.addEventListener('error', () => {
-  reportFailure(new Error('The selected WAV could not be played (media error ' + (audio.error?.code || 'unknown') + ').')).catch(console.error);
+  reportFailure(new Error('The selected sound could not be played (media error ' + (audio.error?.code || 'unknown') + ').')).catch(console.error);
 });
 async function playSelected(preview = false) {
   const { enabled = true, sound } = await browser.storage.local.get(['enabled', 'sound']);
   if (!preview && !enabled) return;
-  if (!sound?.dataUrl?.startsWith('data:audio/wav;base64,')) {
-    if (preview) throw new Error('Choose a WAV file first.');
+  if (!/^data:audio\/(wav|mpeg);base64,/.test(sound?.dataUrl || '')) {
+    if (preview) throw new Error('Choose a sound file first.');
     return;
   }
   audio.pause();

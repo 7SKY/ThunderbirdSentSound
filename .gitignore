@@ -2,3 +2,7 @@
 __pycache__/
 *.pyc
 *-source.zip
+
+# Local Sublime session state
+*.sublime-workspace
+*.sublime-project

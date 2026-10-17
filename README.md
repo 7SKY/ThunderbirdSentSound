@@ -1,14 +1,16 @@
-# Sent Sound 1.0.0
+# Sent Sound 1.1.0
+
+A Thunderbird extension for custom sent-mail sounds, with WAV, MP3, and PCM AIFF support.
 
 ## Install on macOS
 
-1. Save `sent-sound-1.0.0.xpi` locally.
+1. Save `sent-sound-1.1.0.xpi` locally.
 2. In Thunderbird, open Tools → Add-ons and Themes → Extensions.
 3. Open the gear menu → Install Add-on From File… and choose the XPI. Accept the requested permissions.
 4. Open Sent Sound's Preferences/Options (sometimes in its three-dot menu).
-5. Click Browse…, choose a WAV, and click Play. Leave the playback checkbox enabled for automatic sound.
+5. Click Browse…, choose a WAV, MP3, or PCM AIFF, and click Play. Leave the playback checkbox enabled for automatic sound.
 
-You can change the WAV at any time. Changes save automatically. The file is copied into the add-on's local storage; its original path is not retained or monitored. Maximum WAV size: 3 MiB. Standard PCM WAV is recommended. Invalid or undecodable replacements leave the previous sound intact. No sound ships preselected; `test-tone.wav` is an optional short example.
+You can change the WAV at any time. Changes save automatically. The file is copied into the add-on's local storage; its original path is not retained or monitored. Maximum input and stored audio size: 3 MiB. MP3 uses Thunderbird’s decoder. AIFF (.aif/.aiff) and uncompressed AIFF-C (.aifc; NONE/twos/sowt) are converted locally to 16-bit PCM WAV, supporting mono/stereo 8/16/24/32-bit integer PCM. Compressed or floating-point AIFF-C is rejected. Existing WAV selections remain compatible. Invalid or undecodable replacements leave the previous sound intact. No sound ships preselected; `test-tone.wav` is an optional short example.
 
 ## Behavior and limits
 
@@ -24,7 +26,7 @@ Requires Thunderbird 128 or newer by manifest. The APIs used are documented for 
 
 - Official current Thunderbird MailExtension docs checked for onAfterSend, permission, error, and send modes.
 - Installed Thunderbird 158.0 macOS application's packaged compose schema and event implementation inspected: compatible event signature, compose permission, separate success/failure handling, sendNow/sendLater modes.
-- Six Node automated tests pass: success filtering (including no FCC copy), failure/queue rejection, enable/disable, preview, missing sound, error recording, rapid events, and WAV signature/size checks.
+- Automated tests cover: success filtering (including no FCC copy), failure/queue rejection, enable/disable, preview, missing sound, error recording, rapid events, and WAV signature/size checks.
 - JavaScript syntax and ZIP/manifest integrity checked.
 - An isolated headless Thunderbird 158 launch was attempted; the process exited with code 134 before a runtime report was produced. Actual installation, WAV decoding/audio output, and real SMTP sending have NOT been end-to-end verified. Mock tests do not establish real audio or SMTP behavior.
 
@@ -34,10 +36,14 @@ Choose a short PCM WAV → Play should be audible. Close preferences and send a 
 
 ## Source and rebuild
 
-The source ZIP includes the ready-to-install `sent-sound-1.0.0.xpi` alongside this README, the tests, and the editable `source/` directory. `source/` contains the complete add-on, without dependencies or a build step. Run `node --test tests/background.test.cjs`. To rebuild, run `python3 build.py` from this directory. The XPI is a ZIP archive with manifest.json at its root. Test-only instrumentation is not included in the distributed XPI.
+The source ZIP includes the ready-to-install `sent-sound-1.1.0.xpi` alongside this README, the tests, and the editable `source/` directory. `source/` contains the complete add-on, without dependencies or a build step. Run `node --test tests/*.cjs`. To rebuild, run `python3 build.py` from this directory. The XPI is a ZIP archive with manifest.json at its root. Test-only instrumentation is not included in the distributed XPI.
 
 ## API references
 
 - https://webextension-api.thunderbird.net/en/mv2/compose.html#onaftersend
 - https://developer.thunderbird.net/add-ons/mailextensions/supported-manifest-keys
 - https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons/WebExtensions/manifest.json/background
+
+## 1.1.0 format update
+
+Added MP3 and PCM AIFF selection. All 27 automated tests pass. Each file is decoded before saving; a failed replacement preserves the previous selection. AIFF conversion is unit-tested against generated fixtures. Actual Thunderbird audio output remains unverified.

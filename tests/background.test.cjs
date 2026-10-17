@@ -55,3 +55,13 @@ test('rapid events are handled without unhandled rejection', async () => {
   const h = harness({sound}); for(let i=0;i<5;i++) h.sent({}, {mode:'sendNow'});
   await settle(); assert.equal(h.plays(),5);
 });
+test('MP3 playback and legacy WAV playback are accepted; other URLs rejected', async () => {
+  for (const mime of ['mpeg','wav']) {
+    const h=harness({sound:{name:'sound',dataUrl:`data:audio/${mime};base64,AAAA`}});
+    assert.equal((await h.message({type:'sent-sound-preview'})).ok,true);
+    assert.equal(h.plays(),1);
+  }
+  const h=harness({sound:{dataUrl:'https://example.com/sound.mp3'}});
+  assert.equal((await h.message({type:'sent-sound-preview'})).ok,false);
+  assert.equal(h.plays(),0);
+});
